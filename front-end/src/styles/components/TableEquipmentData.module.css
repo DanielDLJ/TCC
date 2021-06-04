@@ -1,0 +1,30 @@
+.TableEquipmentData {
+    font-family: "Roboto", sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+.TableEquipmentData td,
+.TableEquipmentData th {
+    border: 1px solid var(--gray-light);
+    padding: 8px;
+}
+  
+.TableEquipmentData td {
+    color: var(--text);
+    font-size: 1rem;
+}
+  
+.TableEquipmentData tr:hover {
+    background-color: var(--gray-dark);
+}
+  
+.TableEquipmentData th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.1rem;
+    background-color: var(--blue-light);
+    color: var(--white);
+}
