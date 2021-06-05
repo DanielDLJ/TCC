@@ -1,5 +1,5 @@
 import '../styles/global.css'
-import { DeviceDataProvider } from '../contexts/deviceDataContext'
+import { DeviceDataProvider } from '../contexts/DeviceDataContext'
 
 function MyApp({ Component, pageProps }) {
   return (

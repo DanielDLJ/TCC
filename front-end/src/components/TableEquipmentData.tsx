@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import Table from "react-bootstrap/Table";
-import { DeviceDataContext } from '../contexts/deviceDataContext';
+import { DeviceDataContext } from '../contexts/DeviceDataContext';
 import styles from "../styles/components/TableEquipmentData.module.css";
 
 

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import * as d3 from "d3";
 // import "./styles.css";
 import styles from "../styles/components/LineChart.module.css";
-import { DeviceDataContext } from '../contexts/deviceDataContext';
+import { DeviceDataContext } from '../contexts/DeviceDataContext';
 interface climateWebData {
   year: number | Date;
   data: number;
