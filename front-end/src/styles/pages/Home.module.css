@@ -4,3 +4,10 @@
     display: flex;
     flex-direction: column;
 }
+
+
+.containerChart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import Table from "react-bootstrap/Table";
-import axios from '../services/api';
+import { DeviceDataContext } from '../contexts/deviceDataContext';
 import styles from "../styles/components/TableEquipmentData.module.css";
 
-interface equipmentDataType {
-    deviceEUI: string;
-    ph: Number;
-    turbidity: Number;
-    date: string;
-}
 
 export function TableEquipmentData() {
-  const [data, setData] = useState<equipmentDataType[] | null>(null);
-  async function getEquipmentDatay() {
-        try {
-            const result = await axios.get("/equipmentData");
-            if (result.data.length > 0) {
-                setData(result.data);
-            }
-        } catch (error) {
-            console.log("TableEquipmentData error",error)
-        }
-  }
-  useEffect(() => {
-    getEquipmentDatay();
-  }, []);
+  const { equipmentData } = useContext(DeviceDataContext);
 
   return (
     <div className={styles.container}>
@@ -38,9 +19,9 @@ export function TableEquipmentData() {
           </tr>
         </thead>
         <tbody>
-            {data && data.map((item, index)=>{
+            {equipmentData && equipmentData.map((item, index)=>{
                 return(
-                    <tr>
+                    <tr key={index}>
                         <td>{item.deviceEUI}</td>
                         <td>{item.ph}</td>
                         <td>{item.turbidity}</td>

@@ -1,16 +1,13 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
 import { TableEquipmentData } from '../components/TableEquipmentData'
 import styles from '../styles/pages/Home.module.css'
-import { useEffect } from 'react';
-import api from '../services/api'
+import { LineChartpH } from '../components/LineChartpH'
+import { LineChartTurbidity } from '../components/LineChartTurbidity'
 
 interface HomeProps {
 }
 
 export default function Home(props: HomeProps) {
-
-
   return (
       <div className={styles.container}>
         <Head>
@@ -18,7 +15,11 @@ export default function Home(props: HomeProps) {
           <meta name="title" content="TCC" />
           <meta name="description" content="TCC" />
         </Head>
-        <TableEquipmentData />
+            <TableEquipmentData />
+            <div className={styles.containerChart}>
+              <LineChartTurbidity width={400} height={300} />
+              <LineChartpH width={400} height={300} />
+            </div>
       </div>
   )
 }
