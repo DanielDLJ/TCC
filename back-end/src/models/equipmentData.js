@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../config/database')
 const Equipment = require('./equipment');
+const moment = require('moment');
 
 const Equipment_data = db.sequelize.define('equipment_data',{
     id: {
@@ -24,6 +25,9 @@ const Equipment_data = db.sequelize.define('equipment_data',{
         type: Sequelize.DATE,
         // allowNull: false,
         // defaultValue: Sequelize.NOW
+        get: function() {
+            return moment(this.getDataValue('date')).format('YYYY-MM-DD HH:mm:ss')
+         }
     },
 },{
     // disable the modification of tablenames; By default, sequelize will automatically
