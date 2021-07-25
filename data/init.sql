@@ -11,7 +11,9 @@ CREATE TABLE user (
 CREATE TABLE state (
 	id INT(6) PRIMARY KEY,
 	name VARCHAR(70) UNIQUE NOT NULL,
-	sigla VARCHAR(2) UNIQUE NOT NULL
+	sigla VARCHAR(2) UNIQUE NOT NULL,
+	center_lat decimal(18,15) NOT NULL,
+    center_lng decimal(18,15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE city (

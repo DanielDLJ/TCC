@@ -1,5 +1,5 @@
 
-INSERT INTO state (id, name, sigla) VALUES ( 1, "Acre", "AC");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 1, "Acre", "AC", -8.770000000000000, -70.550000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1200013, "Acrelândia", 1);
 INSERT INTO city (id, name, stateID) VALUES ( 1200054, "Assis Brasil", 1);
 INSERT INTO city (id, name, stateID) VALUES ( 1200104, "Brasiléia", 1);
@@ -28,7 +28,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1200807, "Porto Acre", 1);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 2, "Alagoas", "AL");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 2, "Alagoas", "AL", -9.620000000000000, -36.820000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2700102, "Água Branca", 2);
 INSERT INTO city (id, name, stateID) VALUES ( 2700201, "Anadia", 2);
 INSERT INTO city (id, name, stateID) VALUES ( 2700300, "Arapiraca", 2);
@@ -136,7 +136,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2709400, "Viçosa", 2);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 3, "Amapá", "AP");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 3, "Amapá", "AP", 1.410000000000000, -51.770000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1600055, "Serra do Navio", 3);
 INSERT INTO city (id, name, stateID) VALUES ( 1600105, "Amapá", 3);
 INSERT INTO city (id, name, stateID) VALUES ( 1600154, "Pedra Branca do Amapari", 3);
@@ -158,7 +158,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1600808, "Vitória do Jari", 3);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 4, "Amazonas", "AM");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 4, "Amazonas", "AM", -3.470000000000000, -65.100000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1300029, "Alvarães", 4);
 INSERT INTO city (id, name, stateID) VALUES ( 1300060, "Amaturá", 4);
 INSERT INTO city (id, name, stateID) VALUES ( 1300086, "Anamã", 4);
@@ -226,7 +226,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1304401, "Urucurituba", 4);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 5, "Bahia", "BA");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 5, "Bahia", "BA", -13.290000000000000, -41.710000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2900108, "Abaíra", 5);
 INSERT INTO city (id, name, stateID) VALUES ( 2900207, "Abaré", 5);
 INSERT INTO city (id, name, stateID) VALUES ( 2900306, "Acajutiba", 5);
@@ -648,7 +648,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2933604, "Xique-Xique", 5);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 6, "Ceará", "CE");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 6, "Ceará", "CE", -5.200000000000000, -39.530000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2300101, "Abaiara", 6);
 INSERT INTO city (id, name, stateID) VALUES ( 2300150, "Acarape", 6);
 INSERT INTO city (id, name, stateID) VALUES ( 2300200, "Acaraú", 6);
@@ -839,12 +839,12 @@ INSERT INTO city (id, name, stateID) VALUES ( 2314102, "Viçosa do Ceará", 6);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 7, "Distrito Federal", "DF");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 7, "Distrito Federal", "DF", -15.830000000000000, -47.860000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 5300108, "Brasília", 7);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 8, "Espírito Santo", "ES");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 8, "Espírito Santo", "ES", -19.190000000000000, -40.340000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 3200102, "Afonso Cláudio", 8);
 INSERT INTO city (id, name, stateID) VALUES ( 3200136, "Águia Branca", 8);
 INSERT INTO city (id, name, stateID) VALUES ( 3200169, "Água Doce do Norte", 8);
@@ -928,7 +928,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 3205309, "Vitória", 8);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 9, "Goiás", "GO");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 9, "Goiás", "GO", -15.980000000000000, -49.860000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 5200050, "Abadia de Goiás", 9);
 INSERT INTO city (id, name, stateID) VALUES ( 5200100, "Abadiânia", 9);
 INSERT INTO city (id, name, stateID) VALUES ( 5200134, "Acreúna", 9);
@@ -1179,7 +1179,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 5222302, "Vila Propício", 9);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 10, "Maranhão", "MA");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 10, "Maranhão", "MA", -5.420000000000000, -45.440000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2100055, "Açailândia", 10);
 INSERT INTO city (id, name, stateID) VALUES ( 2100105, "Afonso Cunha", 10);
 INSERT INTO city (id, name, stateID) VALUES ( 2100154, "Água Doce do Maranhão", 10);
@@ -1401,7 +1401,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2114007, "Zé Doca", 10);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 11, "Mato Grosso", "MT");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 11, "Mato Grosso", "MT", -12.640000000000000, -55.420000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 5100102, "Acorizal", 11);
 INSERT INTO city (id, name, stateID) VALUES ( 5100201, "Água Boa", 11);
 INSERT INTO city (id, name, stateID) VALUES ( 5100250, "Alta Floresta", 11);
@@ -1548,7 +1548,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 5108956, "Nova Monte Verde", 11);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 12, "Mato Grosso do Sul", "MS");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 12, "Mato Grosso do Sul", "MS", -20.510000000000000, -54.540000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 5000203, "Água Clara", 12);
 INSERT INTO city (id, name, stateID) VALUES ( 5000252, "Alcinópolis", 12);
 INSERT INTO city (id, name, stateID) VALUES ( 5000609, "Amambai", 12);
@@ -1635,7 +1635,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 5008404, "Vicentina", 12);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 13, "Minas Gerais", "MG");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 13, "Minas Gerais", "MG", -18.100000000000000, -44.380000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 3100104, "Abadia dos Dourados", 13);
 INSERT INTO city (id, name, stateID) VALUES ( 3100203, "Abaeté", 13);
 INSERT INTO city (id, name, stateID) VALUES ( 3100302, "Abre Campo", 13);
@@ -2494,7 +2494,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 3172202, "Wenceslau Braz", 13);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 14, "Pará", "PA");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 14, "Pará", "PA", -3.790000000000000, -52.480000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1500107, "Abaetetuba", 14);
 INSERT INTO city (id, name, stateID) VALUES ( 1500131, "Abel Figueiredo", 14);
 INSERT INTO city (id, name, stateID) VALUES ( 1500206, "Acará", 14);
@@ -2645,7 +2645,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1508407, "Xinguara", 14);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 15, "Paraíba", "PB");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 15, "Paraíba", "PB", -7.280000000000000, -36.720000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2500106, "Água Branca", 15);
 INSERT INTO city (id, name, stateID) VALUES ( 2500205, "Aguiar", 15);
 INSERT INTO city (id, name, stateID) VALUES ( 2500304, "Alagoa Grande", 15);
@@ -2876,7 +2876,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2517407, "Zabelê", 15);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 16, "Paraná", "PR");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 16, "Paraná", "PR", -24.890000000000000, -51.550000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 4100103, "Abatiá", 16);
 INSERT INTO city (id, name, stateID) VALUES ( 4100202, "Adrianópolis", 16);
 INSERT INTO city (id, name, stateID) VALUES ( 4100301, "Agudos do Sul", 16);
@@ -3282,7 +3282,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 4128807, "Xambrê", 16);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 17, "Pernambuco", "PE");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 17, "Pernambuco", "PE", -8.380000000000000, -37.860000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2600054, "Abreu e Lima", 17);
 INSERT INTO city (id, name, stateID) VALUES ( 2600104, "Afogados da Ingazeira", 17);
 INSERT INTO city (id, name, stateID) VALUES ( 2600203, "Afrânio", 17);
@@ -3475,7 +3475,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2616506, "Xexéu", 17);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 18, "Piauí", "PI");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 18, "Piauí", "PI", -6.600000000000000, -42.280000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2200053, "Acauã", 18);
 INSERT INTO city (id, name, stateID) VALUES ( 2200103, "Agricolândia", 18);
 INSERT INTO city (id, name, stateID) VALUES ( 2200202, "Água Branca", 18);
@@ -3705,7 +3705,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2211704, "Wall Ferraz", 18);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 19, "Rio de Janeiro", "RJ");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 19, "Rio de Janeiro", "RJ", -22.250000000000000, -42.660000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 3300100, "Angra dos Reis", 19);
 INSERT INTO city (id, name, stateID) VALUES ( 3300159, "Aperibé", 19);
 INSERT INTO city (id, name, stateID) VALUES ( 3300209, "Araruama", 19);
@@ -3808,7 +3808,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 3306305, "Volta Redonda", 19);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 20, "Rio Grande do Norte", "RN");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 20, "Rio Grande do Norte", "RN", -5.810000000000000, -36.590000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2400109, "Acari", 20);
 INSERT INTO city (id, name, stateID) VALUES ( 2400208, "Açu", 20);
 INSERT INTO city (id, name, stateID) VALUES ( 2400307, "Afonso Bezerra", 20);
@@ -3983,7 +3983,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2415008, "Vila Flor", 20);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 21, "Rio Grande do Sul", "RS");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 21, "Rio Grande do Sul", "RS", -30.170000000000000, -53.500000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 4300034, "Aceguá", 21);
 INSERT INTO city (id, name, stateID) VALUES ( 4300059, "Água Santa", 21);
 INSERT INTO city (id, name, stateID) VALUES ( 4300109, "Agudo", 21);
@@ -4488,7 +4488,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 4323804, "Xangri-lá", 21);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 22, "Rondônia", "RO");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 22, "Rondônia", "RO", -10.830000000000000, -63.340000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1100015, "Alta Floresta D'Oeste", 22);
 INSERT INTO city (id, name, stateID) VALUES ( 1100023, "Ariquemes", 22);
 INSERT INTO city (id, name, stateID) VALUES ( 1100031, "Cabixi", 22);
@@ -4547,7 +4547,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1101807, "Vale do Paraíso", 22);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 23, "Roraima", "RR");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 23, "Roraima", "RR", 1.990000000000000, -61.330000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1400027, "Amajari", 23);
 INSERT INTO city (id, name, stateID) VALUES ( 1400050, "Alto Alegre", 23);
 INSERT INTO city (id, name, stateID) VALUES ( 1400100, "Boa Vista", 23);
@@ -4568,7 +4568,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 1400704, "Uiramutã", 23);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 24, "Santa Catarina", "SC");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 24, "Santa Catarina", "SC", -27.450000000000000, -50.950000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 4200051, "Abdon Batista", 24);
 INSERT INTO city (id, name, stateID) VALUES ( 4200101, "Abelardo Luz", 24);
 INSERT INTO city (id, name, stateID) VALUES ( 4200200, "Agrolândia", 24);
@@ -4869,7 +4869,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 4220000, "Balneário Rincão", 24)
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 25, "São Paulo", "SP");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 25, "São Paulo", "SP", -22.190000000000000, -48.790000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 3500105, "Adamantina", 25);
 INSERT INTO city (id, name, stateID) VALUES ( 3500204, "Adolfo", 25);
 INSERT INTO city (id, name, stateID) VALUES ( 3500303, "Aguaí", 25);
@@ -5521,7 +5521,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 3557303, "Estiva Gerbi", 25);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 26, "Sergipe", "SE");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 26, "Sergipe", "SE", -10.570000000000000, -37.450000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 2800100, "Amparo do São Francisco", 26);
 INSERT INTO city (id, name, stateID) VALUES ( 2800209, "Aquidabã", 26);
 INSERT INTO city (id, name, stateID) VALUES ( 2800308, "Aracaju", 26);
@@ -5603,7 +5603,7 @@ INSERT INTO city (id, name, stateID) VALUES ( 2807600, "Umbaúba", 26);
 
 
 
-INSERT INTO state (id, name, sigla) VALUES ( 27, "Tocantins", "TO");
+INSERT INTO state (id, name, sigla, center_lat, center_lng) VALUES ( 27, "Tocantins", "TO", -9.460000000000000, -48.260000000000000);
 INSERT INTO city (id, name, stateID) VALUES ( 1700251, "Abreulândia", 27);
 INSERT INTO city (id, name, stateID) VALUES ( 1700301, "Aguiarnópolis", 27);
 INSERT INTO city (id, name, stateID) VALUES ( 1700350, "Aliança do Tocantins", 27);
