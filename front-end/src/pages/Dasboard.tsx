@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Map from '../components/Map';
 import styles from '../styles/pages/Dashboard.module.css';
-import dataEstados from "../data/estados/estados.json"
-// import getCitysByState from "../util/getCitysByState"
 import api from "../services/api"
 
 const BRAZIL_CENTER = [-10.1868191,-48.3336937]
-
-
-
 
 
 export interface Metric {
@@ -104,6 +99,7 @@ export default function Home() {
     // if (feature.properties && feature.properties.popupContent) {
     //     layer.bindPopup(feature.properties.popupContent);
     // }
+    layer
     layer.on('mouseover', function (e) {
       // console.log(feature.properties)
       layer.bindPopup(feature.properties.name).openPopup();
@@ -147,8 +143,6 @@ export default function Home() {
         id: -1,
         name: "Todas"
       }
-      // console.log("old cid id", citySelect)
-      // console.log("city",response.data)
 
       const onlyCities = response.data.features.map(item=>{
         return {
@@ -181,17 +175,6 @@ export default function Home() {
 
 
   const render_selectStateed_CityEmpty = () =>{
-    // let aux = getCitysByState({sigla: selectState})
-    // const features: Feature[] =
-    // (aux as MapJson).features.map((item, index)=>{
-    //   // console.log(item)
-    //   item.style = {
-    //     color: index%2 === 0 ? "#ff0000": "#00ff33" 
-    //   }
-    //   return item
-    // })
-    // console.log("entrou",mapStateData)
-    // setDataRender(mapStateData.features)
     if(mapStateData === undefined) return
     setDataRender(mapStateData.features)
   }
@@ -242,17 +225,7 @@ export default function Home() {
       if(citySelect === "-1" && selectState !== ""){
         render_selectStateed_CityEmpty()
       }else if(citySelect !== "-1"){
-        // let aux:any = getCitysByState({sigla: selectState})
-
-        // aux = aux.features
-        // .filter(fitem => fitem.properties.id === citySelect)
-
-        // let atualCity = cityData.filter(fitem=>fitem.id === parseInt(citySelect))[0]
-        // aux[0].centroide = {latitude: atualCity.center_lat, longitude: atualCity.center_lng}
-
-        // console.log("citySelect",aux)
         getCity()
-        // setDataRender(mapStateData.features)
       }
     }
   },[citySelect])
@@ -281,18 +254,21 @@ export default function Home() {
             center={center} 
             zoom={center === BRAZIL_CENTER ? 4 : 6} 
             ref={mapRef} 
+            key={"map"}
           >
             {({ TileLayer, Marker, Popup, GeoJSON, CircleMarker }) => (
               <>
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                  key={"TileLayer"}
                 />
-                {typeOfSearch && dataRender && dataRender.map(item=>{
+                {typeOfSearch && dataRender && dataRender.map((item,index)=>{
                   return <GeoJSON
                     attribution="Capa de Hospitales de ESRI"
                     data={item}
                     onEachFeature={onEachFeature}
+                    key={"my-geojson-"+index}
                     style={typeOfSearch === 'water' ? item.properties.water : item.properties.ph}
                   />
                 })}
@@ -313,9 +289,10 @@ export default function Home() {
         
           <select 
             id={"TypeOfSearch"}
+
             onChange={(event)=>{setTypeOfSearch(event.target.value)}}>
             {typeOfSearchArray.map(item=>{
-              return (<option id={item.value} value={item.value}>{item.name}</option>)
+              return (<option id={item.value} value={item.value} key={item.value+"-typeOfSearchArray"}>{item.name}</option>)
             })}
           </select>
           {stateData && stateData.length > 0 &&
@@ -323,17 +300,17 @@ export default function Home() {
               id={"states"}
               onChange={(event)=>{setSelectState(event.target.value)}}>
               {stateData.map(item=>{
-                return (<option id={item.sigla+item.id} value={item.sigla}>{item.name}</option>)
+                return (<option id={item.sigla+item.id} value={item.sigla} key={item.sigla+"-states"}>{item.name}</option>)
               })}
             </select>
           }
           {cityData && cityData.length > 0 &&
             <select
-              id={"citys"}
+              id={"Cities"}
               value={citySelect ? citySelect : "-1"}
               onChange={(event)=>{setCitySelect(event.target.value)}}>
               {cityData.map(item=>{
-                return (<option id={item.name+item.id} value={item.id}>{item.name}</option>)
+                return (<option id={item.name+item.id} value={item.id} key={item.id+"-Cities"}>{item.name}</option>)
               })}
             </select>
           }
