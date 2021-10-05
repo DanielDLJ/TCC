@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const db = {}
 const sequelize =  new Sequelize('tcc', 'root', '1234', {
-  host: 'db', // docker-compose service
-  // host: 'localhost', // local
+  // host: 'db', // docker-compose service
+  host: 'localhost', // local
   dialect: 'mysql',
   port: 3306,
   operatorsAliases: '0',
