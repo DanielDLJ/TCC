@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Map from '../components/Map';
 import styles from '../styles/pages/Dashboard.module.css';
 import api from "../services/api"
+import L from "leaflet";
+
 
 const BRAZIL_CENTER = [-10.1868191,-48.3336937]
 
@@ -99,7 +101,6 @@ export default function Home() {
     // if (feature.properties && feature.properties.popupContent) {
     //     layer.bindPopup(feature.properties.popupContent);
     // }
-    layer
     layer.on('mouseover', function (e) {
       // console.log(feature.properties)
       layer.bindPopup(feature.properties.name).openPopup();
@@ -155,7 +156,8 @@ export default function Home() {
       setCitySelect("-1")
       setCityData([first,...onlyCities])
       setMapStateData(response.data)
-      setDataRender(response.data.features)
+      // setDataRender(response.data.features)
+      setDataRender(response.data)
     } catch (error) {
       
     }
@@ -165,8 +167,10 @@ export default function Home() {
     const idState = stateData.filter(fitem => fitem.sigla === selectState)[0].id
     try {
       const response = await api.get(`/city/${citySelect}`)
+      console.log(response.data)
       setMapCityData(response.data)
-      setDataRender(response.data.features)
+      // setDataRender(response.data.features)
+      setDataRender(response.data)
     } catch (error) {
       
     }
@@ -176,7 +180,9 @@ export default function Home() {
 
   const render_selectStateed_CityEmpty = () =>{
     if(mapStateData === undefined) return
-    setDataRender(mapStateData.features)
+    // setDataRender(mapStateData.features)
+    setDataRender(mapStateData)
+    setMapCityData(undefined)
   }
 
   useEffect(()=>{
@@ -207,10 +213,12 @@ export default function Home() {
     if(selectState !== undefined){
       if(selectState === ""){
         setCenter(()=>{return BRAZIL_CENTER})
-        setDataRender(mapBrazilData.features)
+        // setDataRender(mapBrazilData.features)
+        setDataRender(mapBrazilData)
         //clear city
         setCitySelect("-1")
         setCityData([])
+        setMapCityData(undefined)
       }else{
         console.log("Get Data das cidades")
         const state = stateData.filter(fitem => fitem.sigla === selectState)[0]
@@ -231,11 +239,17 @@ export default function Home() {
   },[citySelect])
 
   useEffect(()=>{
+    console.log("dataRender",dataRender)
     if(mapRef){
       // @ts-ignore
       mapRef.current.retry()
     }
   },[dataRender])
+
+
+  useEffect(()=>{
+  },[dataRender,mapCityData])
+
 
 
   return (
@@ -256,14 +270,14 @@ export default function Home() {
             ref={mapRef} 
             key={"map"}
           >
-            {({ TileLayer, Marker, Popup, GeoJSON, CircleMarker }) => (
+            {({ TileLayer, Marker, Popup, GeoJSON, CircleMarker, Circle, Tooltip }) => (
               <>
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                   key={"TileLayer"}
                 />
-                {typeOfSearch && dataRender && dataRender.map((item,index)=>{
+                {typeOfSearch && dataRender !== undefined && dataRender.features?.map((item,index)=>{
                   return <GeoJSON
                     attribution="Capa de Hospitales de ESRI"
                     data={item}
@@ -272,15 +286,24 @@ export default function Home() {
                     style={typeOfSearch === 'water' ? item.properties.water : item.properties.ph}
                   />
                 })}
-
-                {/* {dataRender && dataRender.map(item=>{
-                  return item.centroide ? 
-                    <CircleMarker center={[item.centroide.latitude, item.centroide.longitude]} pathOptions={{ color: 'red' }} radius={2}>
-                      <Popup>Popup in CircleMarker</Popup>
-                    </CircleMarker>
-                    :
-                    null
-                })} */}
+                {mapCityData && dataRender && dataRender.type === "PointCollection" && dataRender.features?.map((item,index)=>{
+                  console.log("item",item)
+                  return(
+                    <Circle  
+                      key={"CircleMarker-"+index}
+                      center={{lat: parseFloat(item.geometry.coordinates[0]), lng: parseFloat(item.geometry.coordinates[1])}} 
+                      fillColor={typeOfSearch === 'water' ? item.properties.water.color : item.properties.ph.color}
+                      style={typeOfSearch === 'water' ? item.properties.water : item.properties.ph}
+                      onEachFeature={onEachFeature}
+                      weight={0}
+                      radius={5000}
+                    >
+                      <Tooltip direction="bottom" offset={[0, 20]} opacity={1} >
+                        {typeOfSearch === 'water' ? `Turbidez: ${item.properties.water.value}` : `pH: ${item.properties.water.value}`}
+                      </Tooltip>
+                    </Circle>
+                  )
+                })}
               </>
             )}
           </Map>
