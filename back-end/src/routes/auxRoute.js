@@ -1,8 +1,11 @@
 var express = require("express");
 const axios = require("axios");
 var router = express.Router();
+var User = require('../models/user');
 var State = require("../models/state");
 var City = require("../models/city");
+const _ = require("lodash"); 
+const geradorNome = require("gerador-nome"); 
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -12,6 +15,17 @@ router.use(function timeLog(req, res, next) {
 
 router.route("/get_central_point_of_cities").get(function (req, res) {
   getAllCityCentroideData()
+    .then(() => {
+      res.status(200).json("ok");
+    })
+    .catch((error) => {
+      console.log("error", error);
+      res.status(200).json(error);
+    });
+});
+
+router.route("/createUsers").get(function (req, res) {
+  getAllUser()
     .then(() => {
       res.status(200).json("ok");
     })
@@ -54,6 +68,46 @@ async function getAllCityCentroideData() {
       console.log("error to update ", city.id);
     }
   }
+}
+
+async function getAllUser() {
+  for (let i = 0; i < 5570 ; i++){
+    try {
+      const name = getName()
+      const username = name.split(' ')[0] + geraStringAleatoria(20)
+      const password = '$2a$10$5GVK3XDewiK9Xijao5gzlOp5HNbd0.RPg95WFos7xRtI80ynVYVju'
+      await User.create({name,username, password })
+      console.log(i, name)
+    } catch (error) {
+      console.log("getAllUser error", error);
+    }
+  }
+}
+
+function geraStringAleatoria(tamanho) {
+  var stringAleatoria = '';
+  var caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (var i = 0; i < tamanho; i++) {
+      stringAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+  }
+  return stringAleatoria;
+}
+
+function getName() {
+  const Qtq = _.random(1, 5)
+  let name = ""
+  console.log("Qtq",Qtq)
+  for (let i = 0; i < Qtq ; i++){
+    const ramd = _.random(1,3)
+    let part = ""
+    if(ramd === 1) part = geradorNome.geradorNome()
+    if(ramd === 2) part = geradorNome.geradorNomeFeminino()
+    if(ramd === 3) part = geradorNome.geradorNomeMasculino()
+
+    if(name.length === 0) name = part
+    else name += " " + part
+  }
+  return name
 }
 
 module.exports = router;
