@@ -7,6 +7,10 @@ module.exports = db.sequelize.define('user',{
         primaryKey: true,
         autoIncrement: true
     },
+    name:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
     username:{
         type: Sequelize.STRING,
         allowNull: false
