@@ -4,6 +4,7 @@ var router = express.Router();
 var User = require('../models/user');
 var State = require("../models/state");
 var City = require("../models/city");
+const Equipment = require('../models/equipment');
 const _ = require("lodash"); 
 const geradorNome = require("gerador-nome"); 
 
@@ -26,6 +27,17 @@ router.route("/get_central_point_of_cities").get(function (req, res) {
 
 router.route("/createUsers").get(function (req, res) {
   getAllUser()
+    .then(() => {
+      res.status(200).json("ok");
+    })
+    .catch((error) => {
+      console.log("error", error);
+      res.status(200).json(error);
+    });
+});
+
+router.route("/createEquipament").get(function (req, res) {
+  createEquipament()
     .then(() => {
       res.status(200).json("ok");
     })
@@ -108,6 +120,30 @@ function getName() {
     else name += " " + part
   }
   return name
+}
+
+async function createEquipament() {
+  try {
+    const allData = await City.findAll({raw:true});
+    console.log(allData.length)
+    await allData.forEach(async (element, index) => {
+      const auxCreate = {
+        deviceEUI: geraStringAleatoria(16),
+        userID: index,
+        lat: element.center_lat,
+        lng: element.center_lng,
+        cityID: element.id,
+        stateID: element.stateID,
+      }
+      try {
+        await Equipment.create(auxCreate)
+      } catch (error) {
+        console.log("2 error",error)
+      }
+    });
+  } catch (error) {
+    console.log("1 error",error)
+  }
 }
 
 module.exports = router;
