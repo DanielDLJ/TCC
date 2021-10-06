@@ -5,6 +5,8 @@ var User = require('../models/user');
 var State = require("../models/state");
 var City = require("../models/city");
 const Equipment = require('../models/equipment');
+const EquipmentData = require('../models/equipmentData');
+const TypesOfRandomDatas = require('../util/TypesOfRandomDatas');
 const _ = require("lodash"); 
 const geradorNome = require("gerador-nome"); 
 
@@ -38,6 +40,18 @@ router.route("/createUsers").get(function (req, res) {
 
 router.route("/createEquipament").get(function (req, res) {
   createEquipament()
+    .then(() => {
+      res.status(200).json("ok");
+    })
+    .catch((error) => {
+      console.log("error", error);
+      res.status(200).json(error);
+    });
+});
+
+
+router.route("/createEquipamentData").get(function (req, res) {
+  createEquipamentData()
     .then(() => {
       res.status(200).json("ok");
     })
@@ -141,6 +155,44 @@ async function createEquipament() {
         console.log("2 error",error)
       }
     });
+  } catch (error) {
+    console.log("1 error",error)
+  }
+}
+
+async function createEquipamentData() {
+  try {
+    const allData = await Equipment.findAll({raw:true});
+    console.log(allData.length)
+    // console.log(TypesOfRandomDatas(100))
+    let cont = 0
+    for(let equipment of allData){
+      const newData = TypesOfRandomDatas(100)
+      for(let dataToinsert of newData){
+        let auxInsert = dataToinsert
+        auxInsert.deviceEUI = equipment.deviceEUI
+        // console.log(auxInsert)
+        try {
+          await EquipmentData.create(auxInsert)
+        } catch (error) {
+          console.log("2 error",error)
+        }
+      }
+    }
+    // await allData.forEach( (equipment, index1) => {
+    //   const data = TypesOfRandomDatas(100)
+    //   data.forEach((itemToinsert, index2) => {
+    //     cont++
+    //     let insert = itemToinsert
+    //     insert.deviceEUI = equipment.deviceEUI
+    //     console.log(cont)
+    //     // try {
+    //     //   await EquipmentData.create(insert)
+    //     // } catch (error) {
+    //     //   console.log("2 error",error)
+    //     // }
+    //   })
+    // });
   } catch (error) {
     console.log("1 error",error)
   }

@@ -14,11 +14,11 @@ const Equipment_data = db.sequelize.define('equipment_data',{
         allowNull: false
     },
     ph:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     turbidity:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.FLOAT,
         allowNull: false
     },
     date:{
