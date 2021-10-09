@@ -3,6 +3,9 @@ var router = express.Router();
 var City = require('../models/city');
 var State = require("../models/state");
 var GetCitiesByState = require('../util/GetCitiesByState.js');
+const pHUniversalIndicator = require('../util/phScale.js')
+const db = require('../config/database.js')
+const { QueryTypes } = require('sequelize');
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -34,10 +37,23 @@ router.route('/:cityId')
 
 async function getCityData(cityId) {
     try {
-        const city = await City.findByPk(cityId,{raw: true});
+        // const city = await City.findByPk(cityId,{raw: true});
+        const cityData = await db.sequelize.query("SELECT allDataFinal.deviceEUI, allDataFinal.stateID, allDataFinal.cityID, allDataFinal.ph, allDataFinal.turbidity, st.name, st.sigla, st.center_lat, st.center_lng " +
+        " FROM (SELECT deviceEUI, stateID, cityID, AVG(ph) AS ph, AVG(turbidity) AS turbidity FROM ( " +
+            " SELECT eq.deviceEUI, eq.stateID, eq.cityID,eq_data.ph,eq_data.turbidity " +
+            " FROM equipment AS eq " +
+          " INNER JOIN ( " +
+            " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
+            " from equipment_data " +
+            " group by deviceEUI )AS eq_data " +
+          " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
+           "WHERE allData.cityID = " + cityId + " " +
+          " GROUP BY cityID) AS allDataFinal " +
+        " INNER JOIN state AS st " +
+        " ON st.id = allDataFinal.stateID ", { type: QueryTypes.SELECT });
         // const state = await State.findByPk(city.stateID,{raw: true});
 
-        console.log(city)
+        console.log(cityData)
         const basePoint = {
             type: "Feature",
             geometry: {
@@ -60,17 +76,23 @@ async function getCityData(cityId) {
             type:"PointCollection",
             features: []
         }
-        let newPoint = JSON.parse(JSON.stringify(basePoint))
-        newPoint.geometry.coordinates = [city.center_lat, city.center_lng]
-        newPoint.properties.water = {
-            value: 11,
-            color: "#ff0000"
-        }
-        newPoint.properties.ph = {
-            value: 4,
-            color: "#00ff33" 
-        }
-        result.features.push(newPoint)
+
+        cityData.map((item,index) => {
+            console.log("item",item)
+            let newPoint = JSON.parse(JSON.stringify(basePoint))
+
+            newPoint.geometry.coordinates = [item.center_lat, item.center_lng]
+            newPoint.properties.name = item.deviceEUI
+            newPoint.properties.water = {
+                value: item.turbidity,
+                color: pHUniversalIndicator((item.turbidity * 100) / 14 / 100).hex()
+            }
+            newPoint.properties.ph = {
+                value: item.ph,
+                color: pHUniversalIndicator((item.turbidity * 100) / 14 / 100).hex()
+            }
+            result.features.push(newPoint)
+        })
         return result
         // mapData.features.map((item,index) => {
         // let database = allCities.filter(fitem => fitem.id === parseInt(item.properties.id))[0]
