@@ -11,20 +11,31 @@ const getColors = (scale, length) =>
     //@ts-ignore
     .map((x) => `rgba(${x._rgb.map((x) => parseInt(x, 10)).join(",")})`);
 
+const indexSelector = (index: number) =>{
+  if(index < 10 ) return index
+  if(index < 50 ) return index % 2 == 0 ? index : ""
+  if(index === 50) return 50
+  if(index === 60) return 600
+  if(index === 70) return 700
+  if(index === 80) return 800
+  if(index === 90) return 900
+  if(index === 99) return 1000
+}
 const Scale = ({type = "turbidez"}:{type: string}) => {
   const LENGTH_PH = 14;
   const LENGTH_turbidez = 100;
   
   if (type === "water") {
-    const colors = getColors( chroma.scale(["green", "red"]).padding([0.3, 0.0]), LENGTH_turbidez );
+    const colors = getColors( chroma.scale(["green", "red"]).padding([0.3, 0]), LENGTH_turbidez );
+    console.log(colors.length)
     return (
         <div className={styles.ContainerTurbidez}>
             {colors &&
                 colors.map((curr, index) => {
                 return (
                     <div key={`${index}-row`}>
-                    <div key={`${index}-color`} style={{ backgroundColor: curr }} />
-                    <span key={`${index}-text`}>{index % 2 == 0 ? "" : index}</span>
+                      <div key={`${index}-color`} style={{ backgroundColor: curr }} />
+                      <span key={`${index}-text`}>{indexSelector(index)}</span>
                     </div>
                 );
             })}
