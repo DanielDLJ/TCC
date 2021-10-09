@@ -58,7 +58,12 @@ router.route('/:equipmentDataId')
 	// get the user (accessed at GET http://localhost:3001/equipmentData/1)
 	.get(function(req, res) {
         const id = req.params.equipmentDataId
-		EquipmentData.findByPk(id)
+		EquipmentData.findAll({
+            where: {
+                deviceEUI: id,
+            },
+            // order: [['date', 'DESC']]
+        })
             .then(responses => res.status(200).json(responses))
             .catch(err => res.send(err))
 	});
