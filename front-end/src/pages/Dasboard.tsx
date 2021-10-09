@@ -16,6 +16,7 @@ export interface Metric {
 export interface Properties {
   id: string;
   name: string;
+  cityName?: string;
   deviceEUI?: string;
   description: string;
   amenity?: string;
@@ -322,7 +323,7 @@ export default function Home() {
                       // onClick={()=>{console.log("deviceEUI", item.properties.deviceEUI)}}
                     >
                       <Tooltip direction="bottom" offset={[0, 20]} opacity={1} >
-                        {typeOfSearch === 'water' ? `Turbidez: ${item.properties.water.value}` : `pH: ${item.properties.water.value}`}
+                        {typeOfSearch === 'water' ? `Turbidez: ${item.properties.water.value.toFixed(3)}` : `pH: ${item.properties.water.value.toFixed(3)}`}
                       </Tooltip>
                     </Circle>
                   )
