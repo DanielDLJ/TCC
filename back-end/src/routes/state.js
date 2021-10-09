@@ -7,6 +7,7 @@ var GetCitiesByState = require('../util/GetCitiesByState.js');
 const { QueryTypes } = require('sequelize');
 const db = require('../config/database.js')
 const pHUniversalIndicator = require('../util/phScale.js')
+const turbidityScale = require('../util/turbidityScale.js')
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -70,9 +71,11 @@ async function getBrazilLevel() {
     " ON st.id = allDataFinal.stateID ", { type: QueryTypes.SELECT });
 
 
+
     let result = JSON.parse(JSON.stringify(DataEstados))
     result.features.map((item,index) => {
       let database = statesData.filter(fitem => fitem.id === item.properties.id)[0]
+      
       // console.log("database",database, item.properties.id)
       item.properties = {
         ...item.properties,
@@ -80,7 +83,7 @@ async function getBrazilLevel() {
         center_lng: database.center_lng,
         water: {
           value: database.turbidity ,
-          color: pHUniversalIndicator((database.turbidity * 100) / 14 / 100).hex()
+          color: turbidityScale(database.turbidity).hex()
         },
         ph: {
           value: database.ph,
@@ -123,7 +126,7 @@ async function getCitiesData(stateId) {
         center_lng: database.center_lng,
         water: {
           value: database.turbidity ,
-          color: pHUniversalIndicator((database.turbidity * 100) / 14 / 100).hex()
+          color: turbidityScale(database.turbidity).hex()
         },
         ph: {
           value: database.ph,
