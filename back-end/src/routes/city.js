@@ -61,7 +61,7 @@ async function getCityData(cityId) {
               coordinates: [125.6, 10.1]
             },
             properties: {
-                name: "equipment",
+                deviceEUI: "equipment",
                 water: {
                     value: 10,
                     color: "#ff0000"
@@ -82,7 +82,7 @@ async function getCityData(cityId) {
             let newPoint = JSON.parse(JSON.stringify(basePoint))
 
             newPoint.geometry.coordinates = [item.center_lat, item.center_lng]
-            newPoint.properties.name = item.deviceEUI
+            newPoint.properties.deviceEUI = item.deviceEUI
             newPoint.properties.water = {
                 value: item.turbidity,
                 color: pHUniversalIndicator((item.turbidity * 100) / 14 / 100).hex()
@@ -94,24 +94,6 @@ async function getCityData(cityId) {
             result.features.push(newPoint)
         })
         return result
-        // mapData.features.map((item,index) => {
-        // let database = allCities.filter(fitem => fitem.id === parseInt(item.properties.id))[0]
-    
-        // item.properties = {
-        //     ...item.properties,
-        //     center_lat: database.center_lat,
-        //     center_lng: database.center_lng,
-        //     water: {
-        //     value: 10,
-        //     color: index%2 === 1 ? "#ff0000": "#00ff33" 
-        //     },
-        //     ph: {
-        //     value: 5,
-        //     color: index%2 === 0 ? "#ff0000": "#00ff33" 
-        //     }
-        // }
-        // })
-        // return mapData
     } catch (error) {
         console.log("error",error);
         return error

@@ -11,6 +11,8 @@ interface equipmentDataType {
 
 interface DeviceDataContextData {
     equipmentData: equipmentDataType[];
+    openADeviceEUI(eui: string): void;
+    deviceEUI: string;
 }
 
 interface DeviceDataProviderProps {
@@ -21,12 +23,12 @@ export const DeviceDataContext = createContext({} as DeviceDataContextData);
 
 
 export function DeviceDataProvider({ children }: DeviceDataProviderProps) {
-
+    const [deviceEUI, setDeviceEUI] = useState<string>();
     const [equipmentData, setEquipmentData] = useState([]);
 
     async function getEquipmentDatay() {
         try {
-            const result = await axios.get("/equipmentData");
+            const result = await axios.get("/equipmentData/"+deviceEUI);
             if (result.data.length > 0) {
                 setEquipmentData(result.data);
             }
@@ -35,13 +37,19 @@ export function DeviceDataProvider({ children }: DeviceDataProviderProps) {
         }
     }
 
+    const openADeviceEUI = (eui: string) => setDeviceEUI(eui)
+
     useEffect(() => {
-        getEquipmentDatay();
-    }, [])
+        if(deviceEUI !== undefined) getEquipmentDatay();
+    }, [deviceEUI])
+
+
 
     return (
         <DeviceDataContext.Provider value={{
             equipmentData,
+            openADeviceEUI,
+            deviceEUI
         }}>
             {children}
         </DeviceDataContext.Provider>

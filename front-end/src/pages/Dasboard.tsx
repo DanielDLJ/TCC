@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Head from 'next/head';
 import Map from '../components/Map';
 import styles from '../styles/pages/Dashboard.module.css';
 import api from "../services/api"
 import L from "leaflet";
 import ColorIndicator from '../components/ColorIndicator'
-
+import { DeviceDataContext } from '../contexts/DeviceDataContext'
 const BRAZIL_CENTER = [-10.1868191,-48.3336937]
 
 
@@ -16,6 +16,7 @@ export interface Metric {
 export interface Properties {
   id: string;
   name: string;
+  deviceEUI?: string;
   description: string;
   amenity?: string;
   popupContent?: string;
@@ -71,6 +72,7 @@ const typeOfSearchArray = [{
 
 
 export default function Home() {
+  const { openADeviceEUI } = useContext(DeviceDataContext)
   let mapRef = React.useRef();
   const[typeOfSearch, setTypeOfSearch] = useState<'water' | 'pH'>("water")
   const[center, setCenter] = useState(BRAZIL_CENTER)
@@ -313,6 +315,11 @@ export default function Home() {
                       onEachFeature={onEachFeature}
                       weight={0}
                       radius={5000}
+                      eventHandlers={{ click: ()=>{
+                        console.log("deviceEUI", item.properties.deviceEUI) 
+                        openADeviceEUI(item.properties.deviceEUI)
+                      }}}
+                      // onClick={()=>{console.log("deviceEUI", item.properties.deviceEUI)}}
                     >
                       <Tooltip direction="bottom" offset={[0, 20]} opacity={1} >
                         {typeOfSearch === 'water' ? `Turbidez: ${item.properties.water.value}` : `pH: ${item.properties.water.value}`}
