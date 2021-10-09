@@ -53,7 +53,23 @@ router
       .catch((err) => res.send(err));
   });
 
-
+const pHUniversalIndicator = chroma.scale([
+    "#cd1719", // firebrick
+    "#d92521", //crimson
+    "#ed6a18", //chocolate
+    "#f5990d", //orange
+    "#dec401", //gold 
+    "#bdc403", //goldenrod
+    "#92c020", //yellowgreen
+    "#40a535", //limegreen
+    "#609bb5", //cadetblue
+    "#6499d2", //cornflowerblue
+    "#3869b1", //steelblue
+    "#2e4c9b", //darkslateblue
+    "#41348b", //darkslateblue
+    "#422985", //darkslateblue
+    "#61257d" //darkslateblue
+]);
 async function getBrazilLevel() {
   try {
     const statesData = await db.sequelize.query("SELECT * " +
@@ -87,23 +103,7 @@ async function getBrazilLevel() {
       "violet" //#fb55fd
     ]);
 
-    const pHUniversalIndicator = chroma.scale([
-      "#cd1719", // firebrick
-      "#d92521", //crimson
-      "#ed6a18", //chocolate
-      "#f5990d", //orange
-      "#dec401", //gold 
-      "#bdc403", //goldenrod
-      "#92c020", //yellowgreen
-      "#40a535", //limegreen
-      "#609bb5", //cadetblue
-      "#6499d2", //cornflowerblue
-      "#3869b1", //steelblue
-      "#2e4c9b", //darkslateblue
-      "#41348b", //darkslateblue
-      "#422985", //darkslateblue
-      "#61257d" //darkslateblue
-    ]);
+
     let result = JSON.parse(JSON.stringify(DataEstados))
     result.features.map((item,index) => {
       let database = statesData.filter(fitem => fitem.id === item.properties.id)[0]
@@ -129,33 +129,44 @@ async function getBrazilLevel() {
     return error
   }
 }
+
 async function getCitiesData(stateId) {
   try {
-    const state = await State.findByPk(stateId,{raw: true});
-    const allCities = await City.findAll({
-      where: {
-        stateID: stateId
-      },
-      raw: true,
-    });
-    let mapData = GetCitiesByState(state.sigla)
+    const citysOfStateData = await db.sequelize.query("SELECT allDataFinal.stateID, allDataFinal.cityID, allDataFinal.ph, allDataFinal.turbidity, st.name, st.sigla, st.center_lat, st.center_lng " +
+    " FROM (SELECT stateID, cityID, AVG(ph) AS ph, AVG(turbidity) AS turbidity FROM ( " +
+        " SELECT eq.stateID, eq.cityID,eq_data.ph,eq_data.turbidity " +
+        " FROM equipment AS eq " +
+      " INNER JOIN ( " +
+        " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
+        " from equipment_data " +
+        " group by deviceEUI )AS eq_data " +
+      " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
+       "WHERE allData.stateID = " + stateId + " " +
+      " GROUP BY cityID) AS allDataFinal " +
+    " INNER JOIN state AS st " +
+    " ON st.id = allDataFinal.stateID ", { type: QueryTypes.SELECT });
+
+    let mapData = GetCitiesByState(citysOfStateData[0].sigla)
     mapData.features.map((item,index) => {
-      let database = allCities.filter(fitem => fitem.id === parseInt(item.properties.id))[0]
+
+      let database = citysOfStateData.filter(fitem => fitem.cityID === parseInt(item.properties.id))[0]
 
       item.properties = {
         ...item.properties,
         center_lat: database.center_lat,
         center_lng: database.center_lng,
         water: {
-          value: 10,
-          color: index%2 === 1 ? "#ff0000": "#00ff33" 
+          value: database.turbidity ,
+          color: pHUniversalIndicator((database.turbidity * 100) / 14 / 100).hex()
         },
         ph: {
-          value: 5,
-          color: index%2 === 0 ? "#ff0000": "#00ff33" 
+          value: database.ph,
+          color: pHUniversalIndicator((database.ph * 100) / 14 / 100).hex()
         }
+        
       }
     })
+
     return mapData
   } catch (error) {
     console.log("error",error);
