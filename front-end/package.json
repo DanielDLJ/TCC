@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "chroma-js": "^2.1.2",
     "d3": "^6.7.0",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.7.1",

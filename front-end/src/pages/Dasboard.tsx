@@ -4,7 +4,7 @@ import Map from '../components/Map';
 import styles from '../styles/pages/Dashboard.module.css';
 import api from "../services/api"
 import L from "leaflet";
-
+import ColorIndicator from '../components/ColorIndicator'
 
 const BRAZIL_CENTER = [-10.1868191,-48.3336937]
 
@@ -72,7 +72,7 @@ const typeOfSearchArray = [{
 
 export default function Home() {
   let mapRef = React.useRef();
-  const[typeOfSearch, setTypeOfSearch] = useState<string>("water")
+  const[typeOfSearch, setTypeOfSearch] = useState<'water' | 'pH'>("water")
   const[center, setCenter] = useState(BRAZIL_CENTER)
 
   //1 Level all Brazil
@@ -101,12 +101,13 @@ export default function Home() {
     // if (feature.properties && feature.properties.popupContent) {
     //     layer.bindPopup(feature.properties.popupContent);
     // }
+    const value = typeOfSearch === 'water' ?  feature.properties.water.value.toFixed(3) : feature.properties.ph.value.toFixed(3)
+    const type = typeOfSearchArray.filter(fitem => fitem.value == typeOfSearch)[0].name
     layer.on('mouseover', function (e) {
-      // console.log(feature.properties)
-      layer.bindPopup(feature.properties.name).openPopup();
+      layer.bindPopup(`${feature.properties.name} - ${type}: ${value}`).openPopup();
     });
     layer.on('mouseout', function (e) {
-      layer.bindPopup(feature.properties.name).closePopup();
+      layer.bindPopup(`${feature.properties.name} - ${type}: ${value}`).closePopup();
     });
   }
 
@@ -131,6 +132,16 @@ export default function Home() {
       setSelectState("")
       setStateData([first,...onlyStates])
       setCitySelect("-1")
+      const dataTeste = response.data.features.map(item=>{
+        return {
+          id: item.properties.id,
+          name: item.properties.name,
+          sigla: item.properties.sigla,
+          turbidity: item.properties.water,
+          ph: item.properties.ph,
+        }
+      })
+      console.log(dataTeste)
       setMapBrazilData(response.data)
     } catch (error) {
       
@@ -244,7 +255,7 @@ export default function Home() {
       // @ts-ignore
       mapRef.current.retry()
     }
-  },[dataRender])
+  },[dataRender, typeOfSearch])
 
 
   useEffect(()=>{
@@ -259,10 +270,15 @@ export default function Home() {
         <meta name="title" content="TCC" />
         <meta name="description" content="TCC" />
       </Head>
-
       <h1 className={styles.title}> {typeOfSearch && typeOfSearchArray.filter(fitem => fitem.value == typeOfSearch)[0].name} </h1>
+      <div className={styles.IndicatorContainer}>
+          {/* <span className={styles.IndicatorContainerSpan}> Indicador</span> */}
+          <ColorIndicator type={typeOfSearch}/>
+      </div>
+
       <main className={styles.main}>
         <div className={styles.containerMap}>
+          {/* <ColorIndicator type={typeOfSearch}/> */}
           <Map 
             className={styles.homeMap} 
             center={center} 
@@ -309,10 +325,9 @@ export default function Home() {
           </Map>
         </div>
         <div className={styles.containerActions}>
-        
           <select 
             id={"TypeOfSearch"}
-
+            //@ts-ignore
             onChange={(event)=>{setTypeOfSearch(event.target.value)}}>
             {typeOfSearchArray.map(item=>{
               return (<option id={item.value} value={item.value} key={item.value+"-typeOfSearchArray"}>{item.name}</option>)
@@ -338,8 +353,8 @@ export default function Home() {
             </select>
           }
         </div>
-
       </main>
+      
     </>
   )
 }
