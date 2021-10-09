@@ -4,6 +4,7 @@ var City = require('../models/city');
 var State = require("../models/state");
 var GetCitiesByState = require('../util/GetCitiesByState.js');
 const pHUniversalIndicator = require('../util/phScale.js')
+const turbidityScale = require('../util/turbidityScale.js')
 const db = require('../config/database.js')
 const { QueryTypes } = require('sequelize');
 
@@ -38,22 +39,24 @@ router.route('/:cityId')
 async function getCityData(cityId) {
     try {
         // const city = await City.findByPk(cityId,{raw: true});
-        const cityData = await db.sequelize.query("SELECT allDataFinal.deviceEUI, allDataFinal.stateID, allDataFinal.cityID, allDataFinal.ph, allDataFinal.turbidity, st.name, st.sigla, st.center_lat, st.center_lng " +
-        " FROM (SELECT deviceEUI, stateID, cityID, AVG(ph) AS ph, AVG(turbidity) AS turbidity FROM ( " +
-            " SELECT eq.deviceEUI, eq.stateID, eq.cityID,eq_data.ph,eq_data.turbidity " +
-            " FROM equipment AS eq " +
-          " INNER JOIN ( " +
-            " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
-            " from equipment_data " +
-            " group by deviceEUI )AS eq_data " +
-          " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
-           "WHERE allData.cityID = " + cityId + " " +
-          " GROUP BY cityID) AS allDataFinal " +
-        " INNER JOIN state AS st " +
-        " ON st.id = allDataFinal.stateID ", { type: QueryTypes.SELECT });
-        // const state = await State.findByPk(city.stateID,{raw: true});
+        const cityData = await db.sequelize.query("SELECT allDataFinal2.deviceEUI, allDataFinal2.stateID, allDataFinal2.cityID, allDataFinal2.ph, allDataFinal2.turbidity, allDataFinal2.name, allDataFinal2.sigla, ct.name AS cityName, ct.center_lat, ct.center_lng " +
+        " FROM ( " +
+            " SELECT allDataFinal.deviceEUI, allDataFinal.stateID, allDataFinal.cityID, allDataFinal.ph, allDataFinal.turbidity, st.name, st.sigla " +
+            " FROM (SELECT deviceEUI, stateID, cityID, AVG(ph) AS ph, AVG(turbidity) AS turbidity FROM ( " +
+                   " SELECT eq.stateID, eq.deviceEUI, eq.cityID,eq_data.ph,eq_data.turbidity" +
+                    " FROM equipment AS eq " +
+                " INNER JOIN ( " +
+                    " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
+                    " from equipment_data " +
+                    " group by deviceEUI )AS eq_data " +
+                " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
+                " WHERE allData.cityID = " + cityId + " " +
+                " GROUP BY cityID) AS allDataFinal " +
+            " INNER JOIN state AS st " +
+            " ON st.id = allDataFinal.stateID) as allDataFinal2 " +
+        " INNER JOIN city AS ct " +
+        " ON ct.id = allDataFinal2.cityID ", { type: QueryTypes.SELECT });
 
-        console.log(cityData)
         const basePoint = {
             type: "Feature",
             geometry: {
@@ -85,11 +88,11 @@ async function getCityData(cityId) {
             newPoint.properties.deviceEUI = item.deviceEUI
             newPoint.properties.water = {
                 value: item.turbidity,
-                color: pHUniversalIndicator((item.turbidity * 100) / 14 / 100).hex()
+                color: turbidityScale(item.turbidity).hex()
             }
             newPoint.properties.ph = {
                 value: item.ph,
-                color: pHUniversalIndicator((item.turbidity * 100) / 14 / 100).hex()
+                color: pHUniversalIndicator((item.ph * 100) / 14 / 100).hex()
             }
             result.features.push(newPoint)
         })
