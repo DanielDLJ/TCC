@@ -81,7 +81,7 @@ async function getBrazilLevel() {
         ...item.properties,
         center_lat: database.center_lat,
         center_lng: database.center_lng,
-        water: {
+        turbidity: {
           value: database.turbidity ,
           color: turbidityScale(database.turbidity).hex()
         },
@@ -124,7 +124,7 @@ async function getCitiesData(stateId) {
         ...item.properties,
         center_lat: database.center_lat,
         center_lng: database.center_lng,
-        water: {
+        turbidity: {
           value: database.turbidity ,
           color: turbidityScale(database.turbidity).hex()
         },

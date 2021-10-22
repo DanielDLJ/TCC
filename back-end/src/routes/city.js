@@ -65,7 +65,7 @@ async function getCityData(cityId) {
             },
             properties: {
                 deviceEUI: "equipment",
-                water: {
+                turbidity: {
                     value: 10,
                     color: "#ff0000"
                 },
@@ -86,7 +86,7 @@ async function getCityData(cityId) {
 
             newPoint.geometry.coordinates = [item.center_lat, item.center_lng]
             newPoint.properties.deviceEUI = item.deviceEUI
-            newPoint.properties.water = {
+            newPoint.properties.turbidity = {
                 value: item.turbidity,
                 color: turbidityScale(item.turbidity).hex()
             }

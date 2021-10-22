@@ -23,7 +23,7 @@ export interface Properties {
   popupContent?: string;
   center_lat?: string;
   center_lng?: string;
-  water?: Metric;
+  turbidity?: Metric;
   ph?: Metric;
 }
 
@@ -64,8 +64,8 @@ export interface City {
 }
 
 const typeOfSearchArray = [{
-  value: "water",
-  name:"Água",
+  value: "turbidity",
+  name:"Turbidez",
 },{
   value: "ph",
   name:"pH",
@@ -75,7 +75,7 @@ const typeOfSearchArray = [{
 export default function Home() {
   const { openADeviceEUI } = useContext(DeviceDataContext)
   let mapRef = React.useRef();
-  const[typeOfSearch, setTypeOfSearch] = useState<'water' | 'pH'>("water")
+  const[typeOfSearch, setTypeOfSearch] = useState<'turbidity' | 'pH'>("turbidity")
   const[center, setCenter] = useState(BRAZIL_CENTER)
 
   //1 Level all Brazil
@@ -104,7 +104,7 @@ export default function Home() {
     // if (feature.properties && feature.properties.popupContent) {
     //     layer.bindPopup(feature.properties.popupContent);
     // }
-    const value = typeOfSearch === 'water' ?  feature.properties.water.value.toFixed(3) : feature.properties.ph.value.toFixed(3)
+    const value = typeOfSearch === 'turbidity' ?  feature.properties.turbidity.value.toFixed(3) : feature.properties.ph.value.toFixed(3)
     const type = typeOfSearchArray.filter(fitem => fitem.value == typeOfSearch)[0].name
     layer.on('mouseover', function (e) {
       layer.bindPopup(`${feature.properties.name} - ${type}: ${value}`).openPopup();
@@ -140,7 +140,7 @@ export default function Home() {
           id: item.properties.id,
           name: item.properties.name,
           sigla: item.properties.sigla,
-          turbidity: item.properties.water,
+          turbidity: item.properties.turbidity,
           ph: item.properties.ph,
         }
       })
@@ -302,7 +302,7 @@ export default function Home() {
                     data={item}
                     onEachFeature={onEachFeature}
                     key={"my-geojson-"+index}
-                    style={typeOfSearch === 'water' ? item.properties.water : item.properties.ph}
+                    style={typeOfSearch === 'turbidity' ? item.properties.turbidity : item.properties.ph}
                   />
                 })}
                 {mapCityData && dataRender && dataRender.type === "PointCollection" && dataRender.features?.map((item,index)=>{
@@ -311,8 +311,8 @@ export default function Home() {
                     <Circle  
                       key={"CircleMarker-"+index}
                       center={{lat: parseFloat(item.geometry.coordinates[0]), lng: parseFloat(item.geometry.coordinates[1])}} 
-                      fillColor={typeOfSearch === 'water' ? item.properties.water.color : item.properties.ph.color}
-                      style={typeOfSearch === 'water' ? item.properties.water : item.properties.ph}
+                      fillColor={typeOfSearch === 'turbidity' ? item.properties.turbidity.color : item.properties.ph.color}
+                      style={typeOfSearch === 'turbidity' ? item.properties.turbidity : item.properties.ph}
                       onEachFeature={onEachFeature}
                       weight={0}
                       radius={5000}
@@ -323,7 +323,7 @@ export default function Home() {
                       // onClick={()=>{console.log("deviceEUI", item.properties.deviceEUI)}}
                     >
                       <Tooltip direction="bottom" offset={[0, 20]} opacity={1} >
-                        {typeOfSearch === 'water' ? `Turbidez: ${item.properties.water.value.toFixed(3)}` : `pH: ${item.properties.water.value.toFixed(3)}`}
+                        {typeOfSearch === 'turbidity' ? `Turbidez: ${item.properties.turbidity.value.toFixed(3)}` : `pH: ${item.properties.turbidity.value.toFixed(3)}`}
                       </Tooltip>
                     </Circle>
                   )
