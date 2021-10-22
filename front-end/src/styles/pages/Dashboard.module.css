@@ -4,7 +4,7 @@
   height: 100vh;
   /* height: 100%; */
   width: 100%;
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,7 +16,7 @@
   line-height: 1.15;
   font-size: 4rem;
   text-align: center;
-  background-color: pink;
+  /* background-color: pink; */
 }
 
 .IndicatorContainer {
@@ -40,6 +40,7 @@
 
 }
 .containerMap {
+  position: relative;
   flex: 1;
   /* height: 100vh; */
   height: 100%;
@@ -52,14 +53,24 @@
 }
 
 .containerActions {
-  flex: 0.4;
-  height: 100%;
-  width: 100%;
-  background-color: darkorchid;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: darkgray;
+  height: 140px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  z-index: 999999;
+  /* flex: 0.4;
+  height: 100%;
+  width: 100%;
+  left:0;
+  right:0;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
 }
 
 /* .description {

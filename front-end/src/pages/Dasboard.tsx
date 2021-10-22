@@ -330,36 +330,37 @@ export default function Home() {
                 })}
               </>
             )}
+
           </Map>
-        </div>
-        <div className={styles.containerActions}>
-          <select 
-            id={"TypeOfSearch"}
-            //@ts-ignore
-            onChange={(event)=>{setTypeOfSearch(event.target.value)}}>
-            {typeOfSearchArray.map(item=>{
-              return (<option id={item.value} value={item.value} key={item.value+"-typeOfSearchArray"}>{item.name}</option>)
-            })}
-          </select>
-          {stateData && stateData.length > 0 &&
+          <div className={styles.containerActions}>
             <select 
-              id={"states"}
-              onChange={(event)=>{setSelectState(event.target.value)}}>
-              {stateData.map(item=>{
-                return (<option id={item.sigla+item.id} value={item.sigla} key={item.sigla+"-states"}>{item.name}</option>)
+              id={"TypeOfSearch"}
+              //@ts-ignore
+              onChange={(event)=>{setTypeOfSearch(event.target.value)}}>
+              {typeOfSearchArray.map(item=>{
+                return (<option id={item.value} value={item.value} key={item.value+"-typeOfSearchArray"}>{item.name}</option>)
               })}
             </select>
-          }
-          {cityData && cityData.length > 0 &&
-            <select
-              id={"Cities"}
-              value={citySelect ? citySelect : "-1"}
-              onChange={(event)=>{setCitySelect(event.target.value)}}>
-              {cityData.map(item=>{
-                return (<option id={item.name+item.id} value={item.id} key={item.id+"-Cities"}>{item.name}</option>)
-              })}
-            </select>
-          }
+            {stateData && stateData.length > 0 &&
+              <select 
+                id={"states"}
+                onChange={(event)=>{setSelectState(event.target.value)}}>
+                {stateData.map(item=>{
+                  return (<option id={item.sigla+item.id} value={item.sigla} key={item.sigla+"-states"}>{item.name}</option>)
+                })}
+              </select>
+            }
+            {cityData && cityData.length > 0 &&
+              <select
+                id={"Cities"}
+                value={citySelect ? citySelect : "-1"}
+                onChange={(event)=>{setCitySelect(event.target.value)}}>
+                {cityData.map(item=>{
+                  return (<option id={item.name+item.id} value={item.id} key={item.id+"-Cities"}>{item.name}</option>)
+                })}
+              </select>
+            }
+          </div>
         </div>
       </main>
       
