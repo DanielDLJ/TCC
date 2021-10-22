@@ -25,7 +25,7 @@ const Scale = ({type = "turbidez"}:{type: string}) => {
   const LENGTH_PH = 14;
   const LENGTH_turbidez = 100;
   
-  if (type === "water") {
+  if (type === "turbidity") {
     const colors = getColors( chroma.scale(["green", "red"]).padding([0.3, 0]), LENGTH_turbidez );
     console.log(colors.length)
     return (
