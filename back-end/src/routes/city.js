@@ -48,6 +48,7 @@ async function getCityData(cityId) {
                 " INNER JOIN ( " +
                     " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
                     " from equipment_data " +
+                    " WHERE DATE = (SELECT max(DATE) FROM equipment_data) " +
                     " group by deviceEUI )AS eq_data " +
                 " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
                 " WHERE allData.cityID = " + cityId + " " +

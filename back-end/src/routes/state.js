@@ -64,6 +64,7 @@ async function getBrazilLevel() {
       " INNER JOIN ( " +
         " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
         " from equipment_data " +
+        " WHERE DATE = (SELECT max(DATE) FROM equipment_data) " +
         " group by deviceEUI )AS eq_data " +
       " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
       " GROUP BY stateID) AS allDataFinal " +
@@ -108,6 +109,7 @@ async function getCitiesData(stateId) {
       " INNER JOIN ( " +
         " SELECT deviceEUI, ph, turbidity, max(DATE) AS date " +
         " from equipment_data " +
+        " WHERE DATE = (SELECT max(DATE) FROM equipment_data) " +
         " group by deviceEUI )AS eq_data " +
       " ON eq.deviceEUI = eq_data.deviceEUI) AS allData " +
        "WHERE allData.stateID = " + stateId + " " +
