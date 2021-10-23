@@ -167,7 +167,7 @@ async function createEquipamentData() {
     // console.log(TypesOfRandomDatas(100))
     let cont = 0
     for(let equipment of allData){
-      const newData = TypesOfRandomDatas(100)
+      const newData = TypesOfRandomDatas(1)
       for(let dataToinsert of newData){
         let auxInsert = dataToinsert
         auxInsert.deviceEUI = equipment.deviceEUI

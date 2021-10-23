@@ -1,6 +1,6 @@
 const _ = require("lodash"); 
 const moment = require('moment');
-const defaultDate = '2021-04-01 05:00:00'
+const defaultDate = '2034-10-21 08:00:00'
 // Nome       Recomendado      Sorocaba
 // pH          6,0 - 9,5         7,0
 // Turbidez        5             0,26
@@ -19,6 +19,8 @@ function good(sizeData) {
             if(turbidity < 1.2) turbidity -= 0.05
         }
         dataArray.push({
+            // ph: _.random(0, 1),
+            // turbidity: _.random(0, 1),
             ph,
             turbidity,
             date: firstDate.add(i, "days").format('YYYY-MM-DD HH:mm:ss').toString()
@@ -45,6 +47,8 @@ function normal(sizeData) {
             if(turbidity < 1.2) turbidity -= 0.09
         }
         dataArray.push({
+            // ph: _.random(5, 7),
+            // turbidity: _.random(0, 6),
             ph,
             turbidity,
             date: firstDate.add(i, "days").format('YYYY-MM-DD HH:mm:ss').toString()
@@ -73,6 +77,8 @@ function bad(sizeData) {
             if(turbidity < 1.2) turbidity -= 0.9
         }
         dataArray.push({
+            // ph: _.random(0, 6),
+            // turbidity: _.random(7, 30),
             ph,
             turbidity,
             date: firstDate.add(i, "days").format('YYYY-MM-DD HH:mm:ss').toString()
@@ -99,6 +105,8 @@ function bad2(sizeData) {
             if(turbidity < 1.2) turbidity -= 1
         }
         dataArray.push({
+            // ph: _.random(7, 10),
+            // turbidity: _.random(20, 40),
             ph,
             turbidity,
             date: firstDate.add(i, "days").format('YYYY-MM-DD HH:mm:ss').toString()
