@@ -27,6 +27,8 @@ export function LineChartpH(props: lineChartProps) {
     useEffect(()=>{
         if(equipmentData && equipmentData.length > 0){
             console.log("equipmentData",equipmentData)
+            const divChart = document.getElementById('ChartpH');
+            if(divChart) divChart.innerHTML = ''
             renderMultiChart()
         }
     },[equipmentData])

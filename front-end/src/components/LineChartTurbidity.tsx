@@ -27,6 +27,8 @@ export function LineChartTurbidity(props: lineChartProps) {
     useEffect(()=>{
         if(equipmentData && equipmentData.length > 0){
             console.log("equipmentData",equipmentData)
+            const divChart = document.getElementById('ChartTurbidity');
+            if(divChart) divChart.innerHTML = ''
             renderMultiChart()
         }
     },[equipmentData])
