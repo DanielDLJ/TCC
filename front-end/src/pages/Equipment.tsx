@@ -19,11 +19,11 @@ export default function Equipment(props: EquipmentProps) {
           <meta name="description" content="TCC" />
         </Head>
             <img className={styles.imageBTN} src="back.png"  onClick={()=>openADeviceEUI(undefined)}/>
-            <TableEquipmentData />
             <div className={styles.containerChart}>
               <LineChartTurbidity width={400} height={300} />
               <LineChartpH width={400} height={300} />
             </div>
+            <TableEquipmentData />
       </div>
   )
 }
