@@ -43,10 +43,9 @@ Before you install Docker Engine for the first time on a new host machine, you n
     ```
 
 Upgrade Docker Engine
-
-    ```bash
-    sudo apt-get update
-    ```
+```bash
+sudo apt-get update
+```
 
 
 ## Install Compose on Linux systems
@@ -116,3 +115,6 @@ docker-compose rm
 
 ## The running application will look something like this:
 ![map](/images/map.png)
+
+## Reference
+[Docker](https://docs.docker.com/compose/install/)
